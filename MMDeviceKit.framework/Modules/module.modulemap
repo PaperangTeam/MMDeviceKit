@@ -1,0 +1,11 @@
+framework module MMDeviceKit {
+  umbrella header "MMDeviceKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module MMDeviceKit.Swift {
+    header "MMDeviceKit-Swift.h"
+    requires objc
+}
