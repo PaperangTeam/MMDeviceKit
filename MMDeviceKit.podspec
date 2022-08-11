@@ -37,9 +37,6 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'MMDeviceKit.framework/Headers/*'
   s.ios.vendored_frameworks = ['MMDeviceKit.framework']
-  s.resource_bundles = {
-     'MMDeviceKit' => ['MMDeviceKit/Assets/*.plist']
-  }
   #s.source_files = ''
   #s.public_header_files = 'MMDeviceKit/**/*.h'
   #s.ios.vendored_libraries = ['MMDeviceKit/libMMDeviceKit.a']
