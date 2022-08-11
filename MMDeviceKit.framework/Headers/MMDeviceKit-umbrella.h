@@ -10,6 +10,8 @@
 #endif
 #endif
 
+#import "MMGCDAsyncSocket.h"
+#import "MMGCDAsyncUdpSocket.h"
 
 FOUNDATION_EXPORT double MMDeviceKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char MMDeviceKitVersionString[];

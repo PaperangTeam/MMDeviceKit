@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MMDeviceKit'
-  s.version          = '0.1.0'
+  s.version          = '0.2.0'
   s.summary          = 'MiaoBao SDK of MMDeviceKit.'
 
 # This description is used to generate tags and improve search results.
@@ -29,10 +29,20 @@ TODO: Add long description of the pod here.
   #s.source = { :http => 'https://mb-ios.paperang.com/framework/sdk.zip' }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '9.0'
+   s.ios.deployment_target = '9.0'
+  s.static_framework = true
+  s.swift_version = '5'
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64', 'ENABLE_BITCODE' => 'NO' }
+
   s.source_files = 'MMDeviceKit.framework/Headers/*'
   s.ios.vendored_frameworks = ['MMDeviceKit.framework']
-  #s.ios.vendored_frameworks = ['SDK/*.framework']
+  s.resource_bundles = {
+     'MMDeviceKit' => ['MMDeviceKit/Assets/*.plist']
+  }
+  #s.source_files = ''
+  #s.public_header_files = 'MMDeviceKit/**/*.h'
+  #s.ios.vendored_libraries = ['MMDeviceKit/libMMDeviceKit.a']
+
+  s.dependency 'ImageLib'
 end

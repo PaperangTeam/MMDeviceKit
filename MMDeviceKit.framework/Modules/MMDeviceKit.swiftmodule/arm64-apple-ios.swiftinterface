@@ -1,0 +1,1071 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target arm64-apple-ios9.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name MMDeviceKit
+import CoreBluetooth.CBManager
+import CommonCrypto
+import CoreBluetooth
+import Foundation
+import ImageLib
+@_exported import MMDeviceKit
+import MachO
+import MobileCoreServices
+import Swift
+import UIKit
+import _Concurrency
+import MachO.dyld
+public enum MMCharacteristicType : Swift.Int {
+  case mcu
+  case write
+  case bluetooth
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum MMChannelType : Swift.Int {
+  case GATT
+  case SPP
+  case NET
+  case LAN
+  case WIFI
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc(BluetoothState) public enum BluetoothState : Swift.Int {
+  case unknown = 0
+  case resetting = 1
+  case unsupported = 2
+  case unauthorized = 3
+  case poweredOff = 4
+  case poweredOn = 5
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MMConfig : ObjectiveC.NSObject {
+  @objc public static let shared: MMDeviceKit.MMConfig
+  @objc public var showLog: Swift.Bool
+  @objc public var unEnableNameArray: [Swift.String]?
+  @objc public var getUserId: (() -> Swift.String)?
+  @objc public var blePoweredOff: (() -> ())?
+  @objc public var accidentDisconnect: (() -> ())?
+  @objc public var helperViewSetStatuBlock: ((Swift.Int) -> ())?
+  @objc public var handleDisconnectBTCmdBlock: (() -> ())?
+  public var batteryComplete: ((Swift.Int?) -> ())?
+  public var handleSendPrintLineNumBlock: ((Swift.Int?) -> ())?
+  public var handleSendPrintedLabelNumBlock: ((Swift.Int?) -> ())?
+  @objc public var registDevicePara: ((_ device: MMDeviceKit.MMDevice?) -> [Swift.String : Any]?)?
+  public var beforeRegistDeviceBlock: ((_ device: MMDeviceKit.MMDevice?, _ resultBlock: @escaping (_ isSuccess: Swift.Bool?, _ code: Swift.Int?, _ result: Swift.String?, _ isInActivating: Swift.Bool?) -> ()?) -> ())?
+  @objc public var handleRegistDeviceSuccessShowHudBlock: (() -> ())?
+  @objc public var shouldUpdateBlock: ((_ device: MMDeviceKit.MMDevice?) -> Swift.Bool)?
+  @objc public var handlePaperAfterRegistDeviceBlock: ((_ device: MMDeviceKit.MMDevice?) -> ())?
+  @objc public var registFinish: ((_ device: MMDeviceKit.MMDevice?) -> ())?
+  @objc public var printImageButNotConnect: ((_ device: MMDeviceKit.MMDevice?) -> ())?
+  @objc public var handlePrintImageSuccessBlock: (() -> ())?
+  @objc public var didUpdateSuccessBlock: (() -> ())?
+  @objc public var isAllowUpgradeWhenEqual: Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc(MMConsumablesState) public enum MMConsumablesState : Swift.Int {
+  case unsupport = 0, reading = 1, noUid = 2, netFail = 3, invalid = 4, valid = 5
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MMConsumables : ObjectiveC.NSObject {
+  @objc convenience public init(state: MMDeviceKit.MMConsumablesState)
+  @objc public var uid: Swift.String?
+  @objc public var paperSN: Swift.String?
+  @objc public var identifySize: Swift.Bool
+  public var paperType: MMDeviceKit.MMPaperType?
+  public var printType: MMDeviceKit.MMPrintPaperType?
+  public var size: MMDeviceKit.SupportSize?
+  @objc public var state: MMDeviceKit.MMConsumablesState
+  @objc public var info: [Swift.String : Any]?
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum MMA5MessageType : Swift.UInt8 {
+  case request, response, broadcast
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct MMDataFactory {
+}
+public struct MMFirstPtlWorker {
+}
+public struct MMSecondPtlWorker {
+}
+public struct MMThirdPtlWorker {
+}
+public struct MMIbangWorker {
+}
+public struct MMUnpackResult {
+}
+@_hasMissingDesignatedInitializers public class MMParseResult {
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class MM02ParseResult : MMDeviceKit.MMParseResult {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MM07ParseResult : MMDeviceKit.MM02ParseResult {
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class MMA5ParseResult : MMDeviceKit.MMParseResult {
+  @objc deinit
+}
+public struct UploadFileParse {
+  public enum Status : Swift.UInt8 {
+    case success
+    case notFound
+    case paramError
+    public init?(rawValue: Swift.UInt8)
+    public typealias RawValue = Swift.UInt8
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public var status: MMDeviceKit.UploadFileParse.Status
+  public var fileCount: Swift.UInt8
+}
+public struct MMDisposeResult {
+}
+public struct MMUnpackError : Swift.Error {
+}
+public enum MMDeviceFunction {
+  case shakeHand
+  case verify
+  case requestDeviceInfo
+  case updateFirm
+  case startUpdate
+  case printTestPaper
+  case setPowerOffTime
+  case setSN
+  case setKey
+  case getBattery
+  case getBluetoothVersion
+  case loadA5File(isWifi: Swift.Bool)
+  case startReceiveA5File
+  case answerA5File
+  case endA5File
+  case getBindStatus
+  case bindDevice
+  case unbindDevice
+  case requestPrinterInfo
+  case print
+  case generateHFMTree
+  case setSense
+  case setVelocity
+  case setDensity
+  case setPaperMode
+  case getConsume
+  case replyConsume
+  case getNFCUID
+  case getNFCInfo
+  case setNFCInfo
+  case replyTagCheckResult
+  case getRemainKON
+  case closeBluetooth
+  case disconnectBluetooth
+  case getWifiList
+  case setWifi
+  case openWifi
+  case closeWifi
+  case ping
+  case getWifiStatus
+  case getNetPortStatus
+  case getServerStatus
+  case reportServerStatus
+  case requestClockInfo
+  case setClock
+  case getClock
+  case setClockFormat
+  case setAlarm
+  case delAlarm
+  case setPowerOffAlarmOn
+  case setSleepTime
+  case setTomatoClock
+  case setKeySoundOn
+  case setTimerSoundOn
+  case setAlarmSoundOn
+  case setTomatoSoundOn
+  case setAlarmNoteOn
+  case setTomatoNoteOn
+  case setAlarmNoteImage
+  case setTomatoNoteImage
+  case setNotePreData
+  case setAlarmDelayOn
+  case setScreenFlashOn
+  case setTomatoWorkTime
+  case setTomatoBreakTime
+  case getIdleStatus
+  case requestVocabaularyInfo
+  case getBookIds
+  case getBookResourceInfo
+  case deleteBook
+  case getSyncRecordStatus
+  case getSyncRecord
+  case resetBook
+  case getStudyMode
+  case setStudyMode
+  case getBreakpointResumeInfo
+  case syncTaskStatus
+  case checkUploadFile
+  case noticeDeleteRecord
+  case enterLowPowerSleep
+  case getFactoryReport
+  case factoryTestMethod
+}
+public enum FileType : Swift.UInt16 {
+  case updateMCU, updateBT, printNote, tomatoNote, alarmNote, dictionaryFile, dictionaryStatus, dictionaryRecord, gray, ttf, commonAudio
+  public enum BookType : Swift.UInt16 {
+    case official, custom
+    public init?(rawValue: Swift.UInt16)
+    public typealias RawValue = Swift.UInt16
+    public var rawValue: Swift.UInt16 {
+      get
+    }
+  }
+  public init?(rawValue: Swift.UInt16)
+  public typealias RawValue = Swift.UInt16
+  public var rawValue: Swift.UInt16 {
+    get
+  }
+}
+public enum MMDeviceModule : Swift.UInt8, Swift.CaseIterable {
+  case zero
+  case system, file, network, bluetooth, thermalPrint, clock, vocabularyCard, factoryTest
+  public init?(rawValue: Swift.UInt8)
+  public typealias AllCases = [MMDeviceKit.MMDeviceModule]
+  public typealias RawValue = Swift.UInt8
+  public static var allCases: [MMDeviceKit.MMDeviceModule] {
+    get
+  }
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct MMDeviceResponse {
+}
+public enum DeviceStatus : Swift.UInt8, Swift.Codable {
+  case unConnected
+  case connecting
+  case connectedIdle
+  case working
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum SupportSize : Swift.UInt16, Swift.Codable {
+  case TTInch
+  case TwoInch
+  case ThreeInch
+  case FourInch
+  case EightInch
+  public init?(rawValue: Swift.UInt16)
+  public typealias RawValue = Swift.UInt16
+  public var rawValue: Swift.UInt16 {
+    get
+  }
+}
+public enum MMProtocolType : Swift.UInt8 {
+  case first
+  case second
+  case third
+  case iBang
+  case unowned
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum MMCompressType : Swift.UInt8 {
+  case origin
+  case hfm
+  case none
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum MMPaperType : Swift.UInt8 {
+  case role
+  case regular
+  case fold
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum ExceptionType : Swift.Int {
+  case noBattery
+  case lowBattery
+  case overHeat
+  case noPaper
+  case lidOpen
+  case none
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum MMSeriesType : Swift.UInt8 {
+  case thermalPrinter
+  case cloudBox
+  case vocabularyCard
+  case cloud
+  case pen
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct OpenWifiResult {
+  public enum Status : Swift.UInt8 {
+    case success, failed
+    public init?(rawValue: Swift.UInt8)
+    public typealias RawValue = Swift.UInt8
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public let status: MMDeviceKit.OpenWifiResult.Status
+  public let tcpSever: Swift.String
+}
+@objc(MMCloudConnectWifiResult) public enum MMCloudConnectWifiResult : Swift.UInt8 {
+  case success = 0x01, otherError = 0x02, passwordError = 0x03
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@objc(MMCloudWifiStatus) public enum MMCloudWifiStatus : Swift.UInt8 {
+  case idle = 0x00, connecting, connectFaild, passError, connectSuccess = 0x04, disConnect = 0x05, wifiOpen, wifiClose
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@objc(MMCloudNetworkPortStatus) public enum MMCloudNetworkPortStatus : Swift.UInt8 {
+  case unConnect = 0x00, connecting = 0x01, connected = 0x02
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@objc(MMCloudServerStatus) public enum MMCloudServerStatus : Swift.UInt8 {
+  case unConnect = 0x00, connecting = 0x01, connected = 0x02
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@objc(MMAlarmToneType) public enum MMAlarmToneType : Swift.UInt8 {
+  case keytone = 0x01, timer = 0x02, alarm = 0x03, tomato = 0x04
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct MMResumeModel {
+  public var breakpointResumeOkFlg: Swift.Bool
+  public var breakpointResumeFileOffsetPosition: Swift.Int
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MMDevice : ObjectiveC.NSObject {
+  public var seriesType: MMDeviceKit.MMSeriesType
+  public var channelType: MMDeviceKit.MMChannelType? {
+    get
+    set
+  }
+  @objc public var canUseWiFi: Swift.Bool {
+    @objc get
+  }
+  @objc public var isOpenWiFi: Swift.Bool
+  @objc public var deviceName: Swift.String?
+  @objc public var deviceType: Swift.String?
+  @objc public var snCode: Swift.String?
+  @objc public var alias: Swift.String?
+  @objc public var MacAdress: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc public var readableMacAdress: Swift.String?
+  @objc public var offtime: Swift.UInt16
+  @objc public var battery: Swift.UInt8
+  @objc public var firmVersion: Swift.String?
+  @objc public var firmVersionNew: Swift.String?
+  @objc public var firmDownloadPath: Swift.String?
+  @objc public var firmVerifyMD5: Swift.String?
+  @objc public var firmUpdateDescription: Swift.String?
+  @objc public var needUpgrade: Swift.Bool
+  @objc public var forceUpdate: Swift.Bool
+  @objc public var wxiotBindStatus: Swift.Int
+  @objc public var maxPackageLength: Swift.Int
+  @objc public var maxPackageCount: Swift.Int
+  @objc public var maxWidth: Swift.UInt16
+  @objc public var imageWidth: Swift.UInt16
+  @objc public var bottomFeedLine: Swift.UInt16
+  @objc public var uid: Swift.String?
+  public var status: MMDeviceKit.DeviceStatus
+  @objc public func isConnected() -> Swift.Bool
+  public var protocolType: MMDeviceKit.MMProtocolType
+  @objc public var protocolVersion: Swift.String
+  @objc public var serverCode: Swift.String
+  @objc public var serverSign: Swift.String
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MMGattDevice : MMDeviceKit.MMDevice {
+  public var bookSizes: [MMDeviceKit.BookStorageInfo]
+  @objc public var uuid: Swift.String?
+  @objc public var rssi: Foundation.NSNumber?
+  @objc public var vol: Swift.Double
+  @objc public var btVersion: Swift.String?
+  @objc public var temperature: Swift.Double
+  @objc public var writeCharacteristic: CoreBluetooth.CBCharacteristic?
+  @objc public var writeCharacteristicString: Swift.String?
+  @objc public var btCharacteristicString: Swift.String?
+  @objc public var mcuCharacteristicString: Swift.String?
+  @objc public var bindInfo: Swift.String?
+  public var supportSize: [MMDeviceKit.SupportSize]?
+  public var paperTypes: [MMDeviceKit.MMPaperType]
+  @objc public var nfcTagSupport: Swift.Bool
+  @objc public var consumables: MMDeviceKit.MMConsumables {
+    @objc get
+    @objc set
+  }
+  public var supportSizeInfos: [MMDeviceKit.MMSupportSizeInfo]?
+  @objc public var supportDpi: Swift.UInt16
+  @objc public var supportColour: [Swift.UInt8]?
+  @objc public var density: Swift.UInt8
+  public var supportCompress: MMDeviceKit.MMCompressType
+  @objc public var supportBreakpointResume: Swift.Bool
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @objc required override dynamic public init()
+  @objc public func getSupportSizeOC() -> [Swift.Int]
+  public func getSupportSize() -> [MMDeviceKit.SupportSize]
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class IBangDevice : MMDeviceKit.MMGattDevice {
+  @objc required dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MMClockDevice : MMDeviceKit.MMGattDevice {
+  @objc public var is24Hour: Swift.Bool
+  @objc public var isKeySoundOpen: Swift.Bool
+  @objc public var isTomatoSoundOpen: Swift.Bool
+  @objc public var isCountdownSoundOpen: Swift.Bool
+  @objc public var isPowerOffAlarm: Swift.Bool
+  @objc public var isTomatoNoteOpen: Swift.Bool
+  @objc public var isAlarmNoteOpen: Swift.Bool
+  @objc public var workMinute: Swift.Int
+  @objc public var breakMinute: Swift.Int
+  @objc public var tomatoBell: Swift.Int
+  @objc public var countdownBell: Swift.Int
+  @objc public var suspendSecond: Swift.Int
+  @objc public var alarmsArray: [MMDeviceKit.MMAlarmInfoModel]
+  @objc public var tomatosArray: [MMDeviceKit.MMTomatoInfoModel]
+  @objc required dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MMConfigNetDevice : MMDeviceKit.MMGattDevice {
+  @objc required dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class MMPublicCloudDevice : MMDeviceKit.MMDevice {
+  @objc public var selectDate: Swift.String?
+  @objc public var isAdmin: Swift.Bool
+  @objc public var adminNickName: Swift.String?
+  @objc public var reqCount: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class MMCloudDevice : MMDeviceKit.MMPublicCloudDevice {
+  @objc public var openID: Swift.String?
+  @objc public var ram: Swift.String?
+  @objc public var rom: Swift.String?
+  public var hasWifi: Swift.Bool?
+  public var hasEthernet: Swift.Bool?
+  public var isOnline: Swift.Bool?
+  @objc public var bindInfo: Swift.String?
+  @objc public var delegate: Swift.String?
+  public var vol: Swift.Double?
+  public var temp: Swift.Double?
+  @objc public var firstPrinterName: Swift.String? {
+    @objc get
+  }
+  public var isShared: Swift.Bool?
+  @objc public var shareUserNickName: Swift.String?
+  @objc public var adminPic: Swift.String?
+  @objc public var shareId: Swift.Int
+  @objc public var printerList: [MMDeviceKit.MMCloudPrinter]
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class MMPenDevice : MMDeviceKit.MMPublicCloudDevice {
+  @objc public var openID: Swift.String?
+  @objc public var bindInfo: Swift.String?
+  @objc public var showAnswer: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class MMLANDevice : MMDeviceKit.MMDevice {
+  public var isOnline: Swift.Bool?
+  @objc public var ip: Swift.String?
+  public var port: Swift.Int?
+  @objc public var hostName: Swift.String?
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class MMCloudPrinter : MMDeviceKit.MMCloudDevice {
+  @objc public var pageSize: Swift.String?
+  @objc public var dataFormat: Swift.String?
+  @objc public var mediaType: Swift.String?
+  @objc public var printerName: Swift.String?
+  public var connected: Swift.Bool?
+  @objc public var paperState: Swift.String?
+  @objc public var inkLevel: Swift.Int
+  @objc public var error: Swift.Int
+  @objc public var state: Swift.String?
+  @objc public var paperWidth: Swift.Int
+  @objc public var packageSize: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct MMCloudWifiModel {
+  public var rssi: Swift.Int
+  public var flags: Swift.Bool
+  public var ssid: Swift.String?
+}
+public struct MMSupportSizeInfo {
+  public var size: Swift.Int
+  public var hotSpot: Swift.Int
+  public var offset: Swift.Int
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MMAlarmInfoModel : ObjectiveC.NSObject {
+  @objc public var hour: Swift.Int
+  @objc public var minute: Swift.Int
+  @objc public var second: Swift.Int
+  @objc public var cycle: Swift.Int
+  @objc public var isOpen: Swift.Bool
+  @objc public var openAndOrder: Swift.UInt8
+  @objc public var alarmId: Swift.Int
+  @objc public var bellsType: Swift.Int
+  @objc public var isDelayAlarm: Swift.Bool
+  @objc public var name: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MMTomatoInfoModel : ObjectiveC.NSObject {
+  @objc public var month: Swift.Int
+  @objc public var day: Swift.Int
+  @objc public var year: Swift.Int
+  @objc public var count: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MMWifiDevice : MMDeviceKit.MMGattDevice {
+  @objc public var ssid: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc public var pwd: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc required dynamic public init()
+  @objc deinit
+}
+public enum AuthenticationStatus {
+  case unauthenticated
+  case authenticated
+  case refuse
+  public static func == (a: MMDeviceKit.AuthenticationStatus, b: MMDeviceKit.AuthenticationStatus) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MMDeviceLiteApi : ObjectiveC.NSObject {
+  @objc public static func regist(_ appKey: Swift.String, _ appSecret: Swift.String, _ appID: Swift.CLong, _ deviceID: Swift.String, _ success: (() -> Swift.Void)?, _ fail: ((_ code: Swift.Int, _ description: Swift.String?) -> Swift.Void)?)
+  @objc public static func getAvailableDevices(_ devicesHandle: @escaping (_ devices: [MMDeviceKit.MMDevice]) -> Swift.Void)
+  @objc public static func stopFetchDevice()
+  @objc public static func useDevice(_ device: MMDeviceKit.MMDevice?)
+  @objc public static func useDeviceWithMac(_ mac: Swift.String?)
+  @objc public static func unUseDevice(device: MMDeviceKit.MMDevice?)
+  @objc public static func blePrint(images: [UIKit.UIImage]?, device: MMDeviceKit.MMDevice?, printCount: Swift.Int = 1, supportSize: Swift.Int)
+  @objc public static func setDensity(_ device: MMDeviceKit.MMDevice?, _ density: Swift.UInt8, completion: ((_ devices: MMDeviceKit.MMDevice) -> Swift.Void)? = nil)
+  @objc public static func getGattState() -> MMDeviceKit.BluetoothState
+  @objc public static func isConnected() -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+public typealias FileLoadType = MMDeviceKit.FileType
+public typealias FileCompletion = (Swift.Bool) -> Swift.Void
+public struct BreakpointResumeInfo {
+}
+public enum MMDeviceType : Swift.String {
+  case P1, P1S, P2, P2S, P2L, P3, C1, C1S, D1, X2, T1
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc(BindStatus) public enum BindStatus : Swift.UInt8 {
+  case failure = 0x00
+  case success
+  case needBind
+  case none
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct MMDeviceError : Swift.Error {
+  public var message: Swift.String
+  public var code: Swift.Int
+}
+public enum MMDeviceErrorCode : Swift.Int {
+  case None
+  case NotExist
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum ServerType : Swift.Int {
+  case product, test, preProduct
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MMDeviceNetwork : ObjectiveC.NSObject {
+  public typealias FormDataType = (key: Swift.String, filePath: Swift.String)
+  @objc public static func config(_ appKey: Swift.String, _ appSecret: Swift.String, _ appID: Swift.CLong, _ deviceID: Swift.String)
+  @objc public static func post2OC(with request: MMDeviceKit.NetRequestUrls, parameters: [Swift.String : Any], complete: ((_ content: [Swift.String : Any]) -> Swift.Void)?, failure: ((_ code: Swift.Int, _ description: Swift.String?) -> Swift.Void)?)
+  public static func post(with request: MMDeviceKit.NetRequestUrls, parameters: [Swift.String : Any], formData: [MMDeviceKit.MMDeviceNetwork.FormDataType]? = nil, complete: ((_ content: [Swift.String : Any]) -> Swift.Void)?, failure: ((_ code: Swift.Int, _ description: Swift.String?) -> Swift.Void)?)
+  @objc public static func postBin(with request: Swift.String = "http://10.66.9.194:631/ipp/print", bodyData: Foundation.Data, headers: [Swift.String : Swift.String], complete: ((_ content: [Swift.String : Any]) -> Swift.Void)?, failure: ((_ code: Swift.Int, _ description: Swift.String?) -> Swift.Void)?)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public enum FailUseDeviceCode : Swift.Int {
+  case ignore = 0
+  case unrecognize = -1
+  case disallow = -2
+  case connectFail = -3
+  case deviceDisconnect = -4
+  case cmdDisconnect = -5
+  case networkError = 313
+  case unowned = 314
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class NotificationNames : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension MMDeviceKit.NotificationNames {
+  @objc public static let MMCentralManagerDidUpdateStateNotification: Swift.String
+  @objc public static let MMDidDiscoverDeviceNotification: Swift.String
+  @objc public static let MMWillUseDeviceNotification: Swift.String
+  @objc public static let MMDeviceUsableNotification: Swift.String
+  @objc public static let MMDidFailToUseDeviceNotification: Swift.String
+  @objc public static let MMDidFailToUseDeviceNotificationOC: Swift.String
+  @objc public static let MMWillSendPrintDataNotification: Swift.String
+  @objc public static let MMDidSendPrintDataNotification: Swift.String
+  @objc public static let MMDidFinishPrintNotification: Swift.String
+  @objc public static let MMDeviceExceptionStatusNotification: Swift.String
+  @objc public static let MMDeviceInfoDidReceivedNotification: Swift.String
+  @objc public static let MMDeviceInfoAllCheckNotification: Swift.String
+  @objc public static let MMDeviceFirmDidSendNotification: Swift.String
+  @objc public static let MMDeviceFirmDidUpdateNotification: Swift.String
+  @objc public static let MMDeviceFirmFailUpdateNotification: Swift.String
+  @objc public static let MMDeviceFileSendProgressNotification: Swift.String
+  @objc public static let MMDeviceNeedUpgradeNotification: Swift.String
+  @objc public static let MMDeviceConsumeChangedNotification: Swift.String
+  @objc public static let MMDeviceNFCInfoChangeNotification: Swift.String
+  @objc public static let MMDeviceNFCTripChangeNotification: Swift.String
+  @objc public static let MMDevicePrintTaskChangeNotification: Swift.String
+}
+extension MMDeviceKit.NotificationNames {
+  @objc public static let getSNNotificationName: Swift.String
+  @objc public static let getBtVersionNotificationName: Swift.String
+  @objc public static let getFirmVersionNotificationName: Swift.String
+  @objc public static let getDeviceTypeNotificationName: Swift.String
+  @objc public static let getDelegateVersionNotificationName: Swift.String
+  @objc public static let getBindDataNotificationName: Swift.String
+  @objc public static let willConnectCloudDeviceDisconnectNotificationName: Swift.String
+  @objc public static let getCloudDeviceInfoNotificationName: Swift.String
+  @objc public static let changeBindDataNotificationName: Swift.String
+  @objc public static let closeBTNotificationName: Swift.String
+  @objc public static let getWifiListNotificationName: Swift.String
+  @objc public static let connectWifiResultNotificationName: Swift.String
+  @objc public static let getWifiStatusNotificationName: Swift.String
+  @objc public static let getNetworkPortStatusNotificationName: Swift.String
+  @objc public static let getServerStatusNotificationName: Swift.String
+  @objc public static let submitConnectedServerNotificationName: Swift.String
+  @objc public static let verifyFaildNotificationName: Swift.String
+  @objc public static let verifySuccessNotificationName: Swift.String
+  @objc public static let upgradeDeviceNotificationName: Swift.String
+  @objc public static let DeviceDidUpdatePowerOffTimeNotificationName: Swift.String
+  @objc public static let DeviceFailUpdatePowerOffTimeNotificationName: Swift.String
+  @objc public static let DeviceReceivePowerOffTimeNotificationName: Swift.String
+  @objc public static let DeviceReceiveBatteryNotificationName: Swift.String
+}
+extension MMDeviceKit.NotificationNames {
+  @objc public static let setTomatoNoteSuccessNotification: Swift.String
+  @objc public static let setTomatoNoteFailedNotification: Swift.String
+  @objc public static let setAlarmNoteSuccessNotification: Swift.String
+  @objc public static let setAlarmNoteFailedNotification: Swift.String
+  @objc public static let setAlarmTimeSuccessNotification: Swift.String
+}
+extension MMDeviceKit.NotificationNames {
+  @objc public static let setDictionarySuccessNotification: Swift.String
+  @objc public static let setDictionaryFailNotification: Swift.String
+  @objc public static let setDictionaryProgressNotification: Swift.String
+  @objc public static let setFileGrayProgressNotification: Swift.String
+  @objc public static let setDictionaryStatusSuccessNotification: Swift.String
+  @objc public static let setDictionaryStatusFailNotification: Swift.String
+  @objc public static let vocabularyCardResetNotification: Swift.String
+  @objc public static let setFileGrayStatusSuccessNotification: Swift.String
+  @objc public static let setFileGrayStatusFailNotification: Swift.String
+  @objc public static let setWiFiDataProgressNotification: Swift.String
+}
+extension MMDeviceKit.NotificationNames {
+  @objc public static let tcpConnectionChangedNotification: Swift.String
+}
+extension MMDeviceKit.NotificationNames {
+  @objc public static let setIPPPrintTaskNotification: Swift.String
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MMBLENotificationModel : ObjectiveC.NSObject {
+  @objc public var notificationName: Swift.String?
+  @objc public var isSuccess: Swift.Bool
+  @objc public var otherInfo: [Swift.String : Any]?
+  @objc public var device: MMDeviceKit.MMDevice?
+  @objc override dynamic public init()
+  @objc deinit
+}
+public typealias NetRequestUrls = Swift.String
+extension Swift.String {
+  public static let kUrl_api_oauth_token: Swift.String
+  public static let kUrl_api_oauth_cloudtoken: Swift.String
+  public static let kUrl_api_device_names: Swift.String
+  public static let kUrl_api_config_geturlbyname: Swift.String
+  public static let kUrl_api_device_firmware: Swift.String
+  public static let kUrl_api_device_updatefirmware: Swift.String
+  public static let kUrl_api_device_login: Swift.String
+  public static let kUrl_api_device_print: Swift.String
+  public static let kUrl_api_device_auth: Swift.String
+  public static let kUrl_api_log_upload: Swift.String
+  public static let kUrl_api_device_papersecretkey: Swift.String
+  public static let kUrl_api_device_papercheck: Swift.String
+  public static let kUrl_api_device_paperupdatetrip: Swift.String
+}
+extension Swift.String {
+  public static let kUrl_api_device_cloudbind: Swift.String
+  public static let kUrl_api_device_cloudunbind: Swift.String
+  public static let kUrl_api_device_cloudinfo: Swift.String
+  public static let kUrl_device_cloud_peninfo: Swift.String
+  public static let kUrl_api_device_usercloudlist: Swift.String
+  public static let kUrl_api_device_cloud_bindlist: Swift.String
+  public static let kUrl_api_device_cloudupgrade: Swift.String
+  public static let kUrl_api_device_cloudprintsend: Swift.String
+  public static let kUrl_api_device_cloudprintimg: Swift.String
+  public static let kUrl_api_device_cloudprintlist: Swift.String
+  public static let kUrl_api_device_cloudprintingtask: Swift.String
+  public static let kUrl_api_device_cloudprinttask: Swift.String
+  public static let kUrl_api_device_cloudprintstart: Swift.String
+  public static let kUrl_api_device_cloudprintdelete: Swift.String
+  public static let kUrl_api_device_cloudprintstop: Swift.String
+  public static let kUrl_api_device_cloudreprint: Swift.String
+  public static let kUrl_api_device_clouduserlist: Swift.String
+  public static let kUrl_api_device_cloudremovebind: Swift.String
+}
+public enum execute_project_id : Swift.UInt8 {
+  case execute_project_id_enter
+  case execute_project_id_quit
+  case execute_project_id_writefile
+  case execute_project_id_batteryCharge
+  case execute_project_id_key
+  case execute_project_id_screen
+  case execute_project_id_bt
+  case execute_project_id_adc
+  case execute_project_id_mcu
+  case execute_project_id_rtc
+  case execute_project_id_rst
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct MMFactoryProjectData {
+  public var batteryChargingTest: Swift.Bool
+  public var keyTest: Swift.UInt8
+  public var displayTest: Swift.Bool
+  public var bleTest: Swift.Bool
+  public var batteryTest: Swift.Bool
+  public var mcuPowerTest: Swift.Bool
+  public var rtcTest: Swift.Bool
+  public init()
+  public mutating func convertToData() -> Foundation.Data
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MMNotificationStrings : ObjectiveC.NSObject {
+  @objc public static let printDataSizeChangeNotificationName: Swift.String
+  @objc public static let printFinishNotificationName: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc(MMPrintPaperType) public enum MMPrintPaperType : Swift.Int {
+  case normal = 0
+  case label = 1
+  case gray = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MMPrintConfig : ObjectiveC.NSObject {
+  @objc public var targetWidth: CoreGraphics.CGFloat
+  public var targetSize: MMDeviceKit.SupportSize?
+  @objc public var supportDpi: Swift.Int
+  @objc public var precision: Swift.UInt8
+  @objc public var width: Swift.UInt16
+  @objc public var maxWidth: Swift.UInt16
+  @objc public var offset: Swift.UInt16
+  @objc public var isCompress: Swift.UInt8
+  @objc public var paperType: MMDeviceKit.MMPrintPaperType
+  @objc public var count: Swift.Int
+  @objc public var printTopFeed: Swift.Bool
+  @objc public var topFeed: Swift.UInt16
+  @objc final public let labelFeedLineOld: Swift.Int
+  @objc final public let labelFeedLine: Swift.UInt32
+  @objc public var printBottomFeed: Swift.Bool
+  @objc public var bottomFeed: Swift.UInt16
+  @objc public var needBinaryzation: Swift.Bool
+  @objc public var useNewBinaryzation: Swift.Bool
+  @objc public var binaryzationBlock: ((_ image: UIKit.UIImage, _ printConfig: MMDeviceKit.MMPrintConfig) -> UIKit.UIImage?)?
+  @objc public var useFold: Swift.Bool
+  @objc public func configWith(_ device: MMDeviceKit.MMDevice)
+  @objc public func configTargetWidthAndOffset(_ targetSize: Swift.Int, _ device: MMDeviceKit.MMGattDevice)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @objcMembers public class MMPrintContent : ObjectiveC.NSObject {
+  @objc public var imagePath: Swift.String?
+  @objc public init(image: UIKit.UIImage?, isEnd: Swift.Bool)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MMPrintManager : ObjectiveC.NSObject {
+  @objc public static let shared: MMDeviceKit.MMPrintManager
+  @objc public func addTask(tasks: [MMDeviceKit.MMPrintTask])
+  @objc deinit
+}
+@objc @objcMembers public class MMPrintTask : ObjectiveC.NSObject {
+  @objc public var content: MMDeviceKit.MMPrintContent?
+  @objc public var config: MMDeviceKit.MMPrintConfig?
+  @objc public var device: MMDeviceKit.MMDevice? {
+    @objc get
+  }
+  @objc public var dataId: Swift.String
+  @objc public var printedCount: Swift.Int
+  @objc public var dataSize: Swift.Double
+  @objc public init(content: MMDeviceKit.MMPrintContent, config: MMDeviceKit.MMPrintConfig, device: MMDeviceKit.MMDevice)
+  @objc deinit
+}
+public struct VCStudyMode {
+  public enum StudyMode : Swift.UInt8 {
+    case sequence
+    case memory
+    public init?(rawValue: Swift.UInt8)
+    public typealias RawValue = Swift.UInt8
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public var bookType: MMDeviceKit.FileType.BookType
+  public var bookId: Swift.UInt32
+  public var mode: MMDeviceKit.VCStudyMode.StudyMode
+  public var num: Swift.UInt16
+  public var showParase: Swift.Bool
+  public var showSynonym: Swift.Bool
+  public var showExample: Swift.Bool
+  public init()
+  public mutating func convertToData() -> Foundation.Data
+}
+public struct BookStorageInfo {
+  public var position: Swift.Int
+  public var size: Swift.Int
+}
+public struct BookId {
+  public static let exceptionId: Swift.UInt32
+  public var bookType: MMDeviceKit.FileType.BookType
+  public var isExist: Swift.Bool
+  public var bookId: Swift.UInt32
+}
+public struct BookResourceInfo {
+  public enum RType : Swift.UInt16 {
+    case ttf
+    case commonAudio
+    public init?(rawValue: Swift.UInt16)
+    public typealias RawValue = Swift.UInt16
+    public var rawValue: Swift.UInt16 {
+      get
+    }
+  }
+  public var isExist: Swift.Bool
+  public var type: MMDeviceKit.BookResourceInfo.RType
+  public var version: Swift.UInt16
+  public var subType: Swift.UInt16
+}
+public struct BookSyncStatus {
+  public var isNeedSync: Swift.Bool
+  public var bookId: Swift.UInt32
+  public var bookType: MMDeviceKit.FileType.BookType
+}
+public struct RecordItem {
+}
+public struct VocabularyRecordDate {
+}
+public struct VocabularyRecords {
+  public var date: MMDeviceKit.VocabularyRecordDate
+  public var recordCount: Swift.UInt16
+  public var oriData: Foundation.Data?
+}
+extension MMDeviceKit.MMDevice {
+  @objc dynamic public var isVocabularySupportWiFi: Swift.Bool {
+    @objc get
+  }
+  @objc dynamic public var isSupportCommonResources: Swift.Bool {
+    @objc get
+  }
+}
+extension MMDeviceKit.MMCharacteristicType : Swift.Equatable {}
+extension MMDeviceKit.MMCharacteristicType : Swift.Hashable {}
+extension MMDeviceKit.MMCharacteristicType : Swift.RawRepresentable {}
+extension MMDeviceKit.MMChannelType : Swift.Equatable {}
+extension MMDeviceKit.MMChannelType : Swift.Hashable {}
+extension MMDeviceKit.MMChannelType : Swift.RawRepresentable {}
+extension MMDeviceKit.BluetoothState : Swift.Equatable {}
+extension MMDeviceKit.BluetoothState : Swift.Hashable {}
+extension MMDeviceKit.BluetoothState : Swift.RawRepresentable {}
+extension MMDeviceKit.MMConsumablesState : Swift.Equatable {}
+extension MMDeviceKit.MMConsumablesState : Swift.Hashable {}
+extension MMDeviceKit.MMConsumablesState : Swift.RawRepresentable {}
+extension MMDeviceKit.MMA5MessageType : Swift.Equatable {}
+extension MMDeviceKit.MMA5MessageType : Swift.Hashable {}
+extension MMDeviceKit.MMA5MessageType : Swift.RawRepresentable {}
+extension MMDeviceKit.UploadFileParse.Status : Swift.Equatable {}
+extension MMDeviceKit.UploadFileParse.Status : Swift.Hashable {}
+extension MMDeviceKit.UploadFileParse.Status : Swift.RawRepresentable {}
+extension MMDeviceKit.FileType : Swift.Equatable {}
+extension MMDeviceKit.FileType : Swift.Hashable {}
+extension MMDeviceKit.FileType : Swift.RawRepresentable {}
+extension MMDeviceKit.FileType.BookType : Swift.Equatable {}
+extension MMDeviceKit.FileType.BookType : Swift.Hashable {}
+extension MMDeviceKit.FileType.BookType : Swift.RawRepresentable {}
+extension MMDeviceKit.MMDeviceModule : Swift.Equatable {}
+extension MMDeviceKit.MMDeviceModule : Swift.Hashable {}
+extension MMDeviceKit.MMDeviceModule : Swift.RawRepresentable {}
+extension MMDeviceKit.DeviceStatus : Swift.Equatable {}
+extension MMDeviceKit.DeviceStatus : Swift.Hashable {}
+extension MMDeviceKit.DeviceStatus : Swift.RawRepresentable {}
+extension MMDeviceKit.SupportSize : Swift.Equatable {}
+extension MMDeviceKit.SupportSize : Swift.Hashable {}
+extension MMDeviceKit.SupportSize : Swift.RawRepresentable {}
+extension MMDeviceKit.MMProtocolType : Swift.Equatable {}
+extension MMDeviceKit.MMProtocolType : Swift.Hashable {}
+extension MMDeviceKit.MMProtocolType : Swift.RawRepresentable {}
+extension MMDeviceKit.MMCompressType : Swift.Equatable {}
+extension MMDeviceKit.MMCompressType : Swift.Hashable {}
+extension MMDeviceKit.MMCompressType : Swift.RawRepresentable {}
+extension MMDeviceKit.MMPaperType : Swift.Equatable {}
+extension MMDeviceKit.MMPaperType : Swift.Hashable {}
+extension MMDeviceKit.MMPaperType : Swift.RawRepresentable {}
+extension MMDeviceKit.ExceptionType : Swift.Equatable {}
+extension MMDeviceKit.ExceptionType : Swift.Hashable {}
+extension MMDeviceKit.ExceptionType : Swift.RawRepresentable {}
+extension MMDeviceKit.MMSeriesType : Swift.Equatable {}
+extension MMDeviceKit.MMSeriesType : Swift.Hashable {}
+extension MMDeviceKit.MMSeriesType : Swift.RawRepresentable {}
+extension MMDeviceKit.OpenWifiResult.Status : Swift.Equatable {}
+extension MMDeviceKit.OpenWifiResult.Status : Swift.Hashable {}
+extension MMDeviceKit.OpenWifiResult.Status : Swift.RawRepresentable {}
+extension MMDeviceKit.MMCloudConnectWifiResult : Swift.Equatable {}
+extension MMDeviceKit.MMCloudConnectWifiResult : Swift.Hashable {}
+extension MMDeviceKit.MMCloudConnectWifiResult : Swift.RawRepresentable {}
+extension MMDeviceKit.MMCloudWifiStatus : Swift.Equatable {}
+extension MMDeviceKit.MMCloudWifiStatus : Swift.Hashable {}
+extension MMDeviceKit.MMCloudWifiStatus : Swift.RawRepresentable {}
+extension MMDeviceKit.MMCloudNetworkPortStatus : Swift.Equatable {}
+extension MMDeviceKit.MMCloudNetworkPortStatus : Swift.Hashable {}
+extension MMDeviceKit.MMCloudNetworkPortStatus : Swift.RawRepresentable {}
+extension MMDeviceKit.MMCloudServerStatus : Swift.Equatable {}
+extension MMDeviceKit.MMCloudServerStatus : Swift.Hashable {}
+extension MMDeviceKit.MMCloudServerStatus : Swift.RawRepresentable {}
+extension MMDeviceKit.MMAlarmToneType : Swift.Equatable {}
+extension MMDeviceKit.MMAlarmToneType : Swift.Hashable {}
+extension MMDeviceKit.MMAlarmToneType : Swift.RawRepresentable {}
+extension MMDeviceKit.AuthenticationStatus : Swift.Equatable {}
+extension MMDeviceKit.AuthenticationStatus : Swift.Hashable {}
+extension MMDeviceKit.MMDeviceType : Swift.Equatable {}
+extension MMDeviceKit.MMDeviceType : Swift.Hashable {}
+extension MMDeviceKit.MMDeviceType : Swift.RawRepresentable {}
+extension MMDeviceKit.BindStatus : Swift.Equatable {}
+extension MMDeviceKit.BindStatus : Swift.Hashable {}
+extension MMDeviceKit.BindStatus : Swift.RawRepresentable {}
+extension MMDeviceKit.MMDeviceErrorCode : Swift.Equatable {}
+extension MMDeviceKit.MMDeviceErrorCode : Swift.Hashable {}
+extension MMDeviceKit.MMDeviceErrorCode : Swift.RawRepresentable {}
+extension MMDeviceKit.ServerType : Swift.Equatable {}
+extension MMDeviceKit.ServerType : Swift.Hashable {}
+extension MMDeviceKit.ServerType : Swift.RawRepresentable {}
+extension MMDeviceKit.FailUseDeviceCode : Swift.Equatable {}
+extension MMDeviceKit.FailUseDeviceCode : Swift.Hashable {}
+extension MMDeviceKit.FailUseDeviceCode : Swift.RawRepresentable {}
+extension MMDeviceKit.execute_project_id : Swift.Equatable {}
+extension MMDeviceKit.execute_project_id : Swift.Hashable {}
+extension MMDeviceKit.execute_project_id : Swift.RawRepresentable {}
+extension MMDeviceKit.MMPrintPaperType : Swift.Equatable {}
+extension MMDeviceKit.MMPrintPaperType : Swift.Hashable {}
+extension MMDeviceKit.MMPrintPaperType : Swift.RawRepresentable {}
+extension MMDeviceKit.VCStudyMode.StudyMode : Swift.Equatable {}
+extension MMDeviceKit.VCStudyMode.StudyMode : Swift.Hashable {}
+extension MMDeviceKit.VCStudyMode.StudyMode : Swift.RawRepresentable {}
+extension MMDeviceKit.BookResourceInfo.RType : Swift.Equatable {}
+extension MMDeviceKit.BookResourceInfo.RType : Swift.Hashable {}
+extension MMDeviceKit.BookResourceInfo.RType : Swift.RawRepresentable {}
